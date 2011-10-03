@@ -1,0 +1,261 @@
+plsql_parser {
+--------------
+
+  Does the  "else_clause" belong to the case clause
+
+  o  [0006]  is function_expression in nd_factor still needed?
+             it seems that >select count(function_expression) from nd_factor< returns 0.
+
+  o  [0007]  Should "func_or_proc_call" check for a 'complex_plsql_ident' instead of a 'plsql_identifier'?
+
+  o  [0008]  If the keyword INDEX is not found "assoc_array_type_def", it could indicate a "nested_table_type_def".
+             If so, there's an opportunity to optimize. 
+
+  o  [0009]  Implement %type_required in the call to "datatype" in "assoc_array_type_def"
+
+  o  [0010]  Think about the fields index_by_* in nd_assoc_array_type_def (Currently, they're 
+             checked for being in (0, 1) which is different from other 'flags')
+
+  o  [0011]  Is the returned value of "statmt_list_exc_handler" actually needed?
+
+  o  [0012]  Implement "multi_table_insert"
+
+  o  [0013]  Does "like_condition" need the parameters 'check_outer_join_symbol', 'aggregate_function'
+             and 'star_'?
+
+  o  [0014]  Check documented statements in "logical_factor"
+
+  o  [0015]  A logical factor can also be one of the (boolean) keywords TRUE, FALSE and NULL
+
+  o  [0016]  Should "complex_plsql_ident" be called in logical_factor, instead of "plsql_identifier"?
+
+  o  [0017]  Would it be correct to call "expressin" with 'check_outer_join_symbol = true' in "null_condition"?
+
+  o  [0018]  Shold an error be risen in "open_for_statement" if there's an 'open' keyword without a following
+            "complex_plsql_ident"?
+
+  o  [0019]  Should "open_statement" call "plsql_identifier" with 'check_outer_join_symbol => true'?
+
+  o  [0020]  Should the semicolon be eaten in "package"/
+
+  o  [0021] "package" should return true if a package was successfully parsed.
+
+  o  [0022] "package_body" should return a boolean or a number / it should not
+             be a procedure so as to make it possible to check whether the package
+             was parsed successfully.
+           
+  o  [0024]  Think about a 'definition_allowed' parameter in "package_body"
+
+  o  [0025]  Call "is_default_assignment" in "parameter_declaration"
+
+  o  [0026]  Can a "plsql_block" have an autonomous_transaction? Tahiti seems to 
+             be wrong on this one.
+
+  o  [0027]  Is the star_ parameter necessary for "plsql_identifier"?
+
+  0  [0028]  A "plsql_identifier" should support the '@', too.
+
+  o  [0029]  If the last element in a "plsql_identifier" is 'DELETE', 'EXTEND' or 'TRIM',
+             it's a 'collection_method_call'. Or so says tahiti.
+
+  o  [0030]  If first or second identifier is '*' in "plsql_identifier", the "plsql_identifier" 
+             is already eaten.
+
+  o  [0031]  What if third identifier is '*' in "plsql_identifier"?
+
+  o  [0032]  Should "plsql_identifier_elem" call "complex_plsql_ident" instead of "plsql_identifier"?
+
+  0  [0033]  Is the autonomous_transaction_allowed parameter really needed in "pragma_"?
+
+  o  [0034]  Has Oracle forgotten to include the ';' in their EBNF for a "procedure_declaration"?
+
+  o  [0035]  Maybe eat_semicolon does it, too?
+
+  o  [0036]  Is there a possibility to find out the expected_naem when calling "body"?
+
+  o  [0037]  "procedure_heading" and "function_heading" are similar.
+
+  o  [0038]  Is the name needed?
+
+  o  [0039]  What about %type and %rowtype?
+
+  o  [0040]  Think about solving the return statement easier.
+
+  o  [0041]  Is it possible to indicate if a "subquery" expects exactly one column?
+
+  o  [0042]  Can a "searched_case_elem" occur in PL/SQL context?
+
+  o  [0043] "start_with_condition" and "connect_by_condition" are similar.
+
+  o  [0044]  Should check_outer_join_symbol be true when "condition" is called within "start_with_condition"?
+
+  o  [0046]  Should "plsql_identifier" be used instead of "complex_plsql_ident" in update_set_clause"?
+
+  o  [0047]  ONLY dml_table_expression_clause in "update_statement"/"delete_statement"
+
+  o  [0048] "variable_declaration" and "constant_declaration" are similar.
+
+  o  [0049]  Can 'CURSOR' occur in "variable_declaration"?
+
+  o  [0050]  Similarity between "body" and "initialize_section".
+
+  o  [0051]  Check expected name in "body"
+
+  o  [0052]  Should this be a "select_statement" instead of a "multiset_subquery" in "cast"? 
+
+  o  [0053]  Should the "close_statement" use a "complex_plsql_ident" instead of a "plsql_identifier"?
+
+  o  [0054]  Is a "condition" a "boolean_condition"?
+
+  o  [0055]  Verify precedence in "condition" (and nd_logical_factor_list?)
+
+  o  [0056]  Should check_outer_join_symbol be true when "condition" is called in "connect_by_condition"?
+
+  o  [0057]  Should be checked for a ';' in "constant_declaration"?
+
+  o  [0058]  Implement "error_logging_clause"
+
+  o  [0059]  Range Check for "exception_init_pragma"
+
+  o  [0060]  Make sure the 'prior' keyword is checked at the correct location in "expression".
+
+  o  [0061] "expression_list" should probably have a parameter that indicates if function should
+             check for paranthesis.
+
+  o  [0062]  Parameter 'check_outer_join_symbol' in "factor" still used?
+
+  o  [0063]  NULL can be prefixed with a sign in "factor".
+
+  o  [0064] "bounds_clause" in "for_loop_statement"
+
+  o  [0065]  SAVE EXCEPTIONS
+
+  o  [0066]  Join Clause within paranthesis
+
+  o  [0067] "function_expression" might better be called "function_call"
+
+  o  [0068]  Yet, it is completely unclear if "function_expression"/"function_call" is really used.
+
+  o  [0069]  Is the parameter parameter_list_required really used in func_or_proc_call within "function_expression"?
+
+  o  [0073]  Should the statements 'continue', 'exit', 'goto' and 'raise' be treated specially?
+
+  o  [0074]  Implement
+              -  model condition ("is_any_condition" http://download.oracle.com/docs/cd/E11882_01/server.112/e17118/conditions005.htm)
+              - "is_of_type_condition" http://download.oracle.com/docs/cd/E11882_01/server.112/e17118/conditions014.htm
+
+  o  [0076]  Similarity between CONTINUE and EXIT statements
+
+  o  [0077]  Is 'rowtype_returned' used in nd_cursor_definition?
+
+  o  [0078]  Implement a reasonable check condition in nd_datatype
+
+  o  [0079]  Finish dml_table_expression_clause
+
+  o  [0080]  nd_exception maybe better called nd_exception_elem?
+
+  o  [0081]  Various expressions must evaluate to the correct type
+
+  o  [0082]  Does nd_factor really need an id?
+
+  o  [0083]  Does nd_factor need a null_ thingie?
+
+  o  [0084]  Reasonable check for nd_fetch_statement
+
+  o  [0085]  Note similarity between "for_loop_statement" and "cursor_for_loop_statement"
+
+  o  [0086]  index = varchar2 in nd_for_loop_statement?
+
+  o  [0087]  deterministic, pipelined, parallel_enable and result_cache also found in
+             both nd_function_declaration and nd_function_definition
+
+  o  [0088]  Implement relies_on_clause
+
+  o  [0089]  Implement rollup_cube_clause
+
+  o  [0090]  Implement grouping_sets_clause
+
+  o  [0091]  Reasonable check for nd_inner_join_clause
+
+  o  [0092]  function_declaration still needed in nd_item_elem_2?
+
+  o  [0093]  Implement 'host variables', for example in nd_open_for_statement
+
+  o  [0094]  Implement query_partition_clause
+
+  o  [0095]  Should a package name be a plsql_identifier?
+
+  o  [0096]  Does nd_parameter_declaration really need an ID?
+
+  o  [0097] "procedure_call" and "function_expression" are similar.
+
+  o  [0098]  Should the scalar_subquery_expression have a "subquery_factoring_clause" instead of
+             a "subquery"
+
+  o  [0099]  nd_searched_case_elem probably better named 'searched_case_expr_elem'.
+
+  o  [0100]  Should 'pragma inline' be regarded as a statement?
+
+  o  [0101]  Implement "search_clause"
+
+  o  [0102]  Implement "cycle_clause"
+
+  o  [0103]  character set in subtype definition
+
+  o  [0104]  NOT NULL constraint in subtype definition
+
+  o  [0105]  Outer join symbol for nd_table_collection_expression
+
+  o  [0106]  update set clause: expr | (subquery)
+
+  o  [0107]  Similarities in dml_statements.
+}
+scanner {
+
+  o  Should next_char raise an error if eof_reached_
+     Alternatively, the parser should catch this
+     exception.
+
+  o  scanner_varchar2 {
+
+     o  [0071]  What happens if length(program_) < next_position_ in read_char
+
+  }
+
+  o  scanner_dba_source {
+
+     o  [0005]  It should be dealt with the situation where a user doesn't have
+                sufficient rights to select from dba_source.
+
+  }
+
+}
+token {
+
+  o  [0001] There should also be a type_ HINT
+
+}
+token_getter {
+
+  o  [0002]  A different error shold be thrown in token_value_id
+
+  o  [0003]  A testacse is needed for what_and_where
+
+  o  [0072]  Which error is thrown if token_value_id is neither an ID nor an Id?
+
+}
+token_getter_into_table {
+
+  o  [0004]  The column token in token_table could be named differently.
+
+}
+test {
+
+  o  [0023]  Testcase for "order_by_clause"
+
+  o  [0070]  Testcase for SUBTYPE abc is tab%rowtype
+
+  o  [0075]  Testcase for CONTINUE statement
+
+  o          Various 'TEST' in test/parser_2.sql and test/* files
+}

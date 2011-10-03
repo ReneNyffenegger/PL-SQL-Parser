@@ -1,0 +1,5 @@
+--TODO create table nd_boolean_expression (
+--TODO   id number(8)                  not null primary key,
+--TODO   boolean_constant varchar2(5)  not null check(boolean_constant in ('TRUE', 'FALSE', 'NULL'))
+--TODO   -- TODO Is this correct
+--TODO );
