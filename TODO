@@ -234,6 +234,8 @@ token {
 
   o  [0001] There should also be a type_ HINT
 
+  o  [0108] Preprocessor directives ($IF $$XYZ $THEN code $END) should be recognized 
+
 }
 token_getter {
 
