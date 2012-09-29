@@ -15,26 +15,23 @@ tables/uninstall_nodes.sql
 A parser needs a scanner and a lexer. These are found
 under the directory parser as well.
 
-
-
-
----  INSTALLATION   ---
+# INSTALLATION
 
 It is recommended to create a schema for the database objects
 needed by the parser.
 
-create user TQ84_PARSER identified by TQ84_PARSER;
-grant dba to TQ84_PARSER;
-connect TQ84_PARSER/TQ84_PARSER;
+    create user TQ84_PARSER identified by TQ84_PARSER;
+    grant dba to TQ84_PARSER;
+    connect TQ84_PARSER/TQ84_PARSER;
 
-@install_parser.sql
+    @install_parser.sql
 
 
---- TESTS ---
+# TESTS
 
 A few test cases are found under the directrory test/
 
 After the parser is installed, the tests can be
 executed with 
 
-@@ tests/go.sql
+    @@ tests/go.sql
