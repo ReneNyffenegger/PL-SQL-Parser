@@ -53,7 +53,7 @@ plsql_parser {
 
   o  [0027]  Is the star_ parameter necessary for "plsql_identifier"?
 
-  0  [0028]  A "plsql_identifier" should support the '@', too.
+  o  [0028]  A "plsql_identifier" should support the '@', too.
 
   o  [0029]  If the last element in a "plsql_identifier" is 'DELETE', 'EXTEND' or 'TRIM',
              it's a 'collection_method_call'. Or so says tahiti.
@@ -65,7 +65,7 @@ plsql_parser {
 
   o  [0032]  Should "plsql_identifier_elem" call "complex_plsql_ident" instead of "plsql_identifier"?
 
-  0  [0033]  Is the autonomous_transaction_allowed parameter really needed in "pragma_"?
+  o  [0033]  Is the autonomous_transaction_allowed parameter really needed in "pragma_"?
 
   o  [0034]  Has Oracle forgotten to include the ';' in their EBNF for a "procedure_declaration"?
 
@@ -249,6 +249,11 @@ token_getter {
 token_getter_into_table {
 
   o  [0004]  The column token in token_table could be named differently.
+
+}
+various {
+
+  o  [0109]  why has nd_package no id? Compare with nd_package_body.
 
 }
 test {
