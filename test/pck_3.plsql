@@ -12,9 +12,9 @@ as
 --  c_prc constant number(5,2)  := 4.2;
     c_chr_2 constant char(2)      := 'XY';
 
-    $IF $$PREPROCESSOR $THEN
-        TODO_0108: Preprocessor directives should be recognized.
-    $END
+--  $IF $$PREPROCESSOR $THEN
+--      TODO_0108: Preprocessor directives should be recognized.
+--  $END
 
 end tq84_pck_3;
 /
