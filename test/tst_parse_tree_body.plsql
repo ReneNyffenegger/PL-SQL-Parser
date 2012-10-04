@@ -70,7 +70,7 @@ create or replace package body tst_parse_tree as
                              cons.constraint_type = 'P') loop -- {
 
 
-            result_ := new tst_result(r_tab.table_name, 'where ' || r_tab.column_name || '=' || pk);
+            result_ := new tst_result(r_tab.table_name, r_tab.column_name, pk);
 
             if result_.records.count > 0 then
 

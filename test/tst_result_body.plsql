@@ -1,6 +1,6 @@
 create or replace type body tst_result as
 
-  constructor function tst_result(table_ in varchar2, where_ in varchar2) return self as result -- {
+  constructor function tst_result(table_ in varchar2, where_column in varchar2, where_value in varchar2) return self as result -- {
   is
 
       stmt                       varchar2(30000);
@@ -30,7 +30,7 @@ create or replace type body tst_result as
       stmt_1     := stmt_1     || 'begin ' || chr(10);
       stmt_1     := stmt_1     || '  :1 := new tst_record_t();' || chr(10);
 
-      stmt_1     := stmt_1     || '  for r in (select * from ' || table_ || ' ' || where_;
+      stmt_1     := stmt_1     || '  for r in (select * from ' || table_ || ' where ' || where_column || '=' || where_value;
 
       --                              ORDER BY HERE (stmt_order_by)
       
@@ -46,7 +46,7 @@ create or replace type body tst_result as
                                                                    ''', column_name => ''' || c.column_name || 
                                                                    ''', field_value => r.' || c.column_name || ');' || chr(10);
 
-          if c.column_name != 'ID' and is_foreign_key(table_, c.column_name) then
+          if c.column_name != where_column and is_foreign_key(table_, c.column_name) then
 
              if stmt_order_by is null then
 
@@ -69,8 +69,11 @@ create or replace type body tst_result as
       stmt_2     := stmt_2     || '  end loop;' || chr(10);
       stmt_2     := stmt_2     || 'end;';
 
-      stmt := stmt_1 || stmt_order_by || ')' || stmt_2;
+      if stmt_order_by is not null then
+         stmt_order_by := stmt_order_by || ')';
+      end if;
 
+      stmt := stmt_1 || stmt_order_by || stmt_2;
 
       begin
         execute immediate stmt using in out self.records;
@@ -79,7 +82,7 @@ create or replace type body tst_result as
         dbms_output.put_line('---------------');
         dbms_output.put_line(sqlerrm);
         dbms_output.put_line(stmt);
-        dbms_output.put_line('---------------');
+        raise_application_error(-20800, 'tst_result could not execute immediate');
 
       end;
 

@@ -32,7 +32,7 @@ create or replace type body tst_record as
       begin
         execute immediate stmt_intro using in out self.fields;
       exception when others then
-        dbms_output.put_line('------------- ' ||sqlerrm || ' The statement is');
+        dbms_output.put_line('------------- ' || sqlerrm || ' The statement is');
         dbms_output.put_line(stmt_intro);
         dbms_output.put_line('------------- ..');
       end;
