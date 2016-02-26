@@ -15,7 +15,7 @@ tables/uninstall_nodes.sql
 A parser needs a scanner and a lexer. These are found
 under the directory parser as well.
 
-# INSTALLATION
+# Installation
 
 It is recommended to create a schema for the database objects
 needed by the parser.
@@ -27,7 +27,7 @@ needed by the parser.
     @install_parser.sql
 
 
-# TESTS
+# Tests
 
 A few test cases are found under the directrory test/
 
@@ -35,3 +35,7 @@ After the parser is installed, the tests can be
 executed with 
 
     @@ tests/go.sql
+    
+# Links
+
+https://github.com/jonheller1/plsql_lexer
